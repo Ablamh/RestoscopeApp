@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "31359914864",
+    "project_id": "restoscopedb",
+    "storage_bucket": "restoscopedb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31359914864:android:9961dc4609989e12a035b5",
+        "android_client_info": {
+          "package_name": "com.example.restoacopeapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHuQlkzNe3K0etL3qaahhzPqFSm1rsCQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
