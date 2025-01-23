@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/white"
+    tools:context=".FragmentDeficienceVisuelle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Déficience Visuelle"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/mauve_clair">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Supports d'information"
+                    android:textSize="24sp"
+                    android:textColor="@color/deep_purple"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Menu en braille"
+                    android:textColor="@color/black"
+
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Menu gros caractères"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description audio"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aménagements"
+                    android:textSize="24sp"
+                    android:textColor="@color/deep_purple"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Eclairage adapté"
+                    android:textColor="@color/black"
+
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chiens-guides acceptés"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Formation du personnel"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="16dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnPrevious"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Précédent"
+                android:backgroundTint="@color/purple_500"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Suivant"
+                android:backgroundTint="@color/purple_500"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

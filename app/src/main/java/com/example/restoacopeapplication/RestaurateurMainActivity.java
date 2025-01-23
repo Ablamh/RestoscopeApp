@@ -1,16 +1,12 @@
 package com.example.restoacopeapplication;
+
 import android.os.Bundle;
 import android.content.Intent;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.FirebaseApp;
-import android.os.Bundle;
 import android.widget.Button;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,13 +15,13 @@ public class RestaurateurMainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
 
-        // Vérifier si l'utilisateur est connecté
         if (mAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -33,8 +29,18 @@ public class RestaurateurMainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_restaurateur_main);
-
         setupNavigation();
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                } else {
+                    finish();
+                }
+            }
+        });
     }
 
     private void setupNavigation() {
@@ -43,31 +49,38 @@ public class RestaurateurMainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            Fragment fragment = null;
+
             if (itemId == R.id.acceuile) {
-                replaceFragment(new AcceuilFragment());
-                return true;
+                fragment = new AcceuilFragment();
             } else if (itemId == R.id.ajouter) {
-                replaceFragment(new AjouterFragment());
-                return true;
+                fragment = new AjouterFragment();
             } else if (itemId == R.id.profile) {
-                replaceFragment(new ProfileFragment());
+                fragment = new ProfileFragment();
+            }
+
+            if (fragment != null) {
+                replaceFragment(fragment, false);
                 return true;
             }
             return false;
         });
 
-        // Charger le fragment par défaut
-        replaceFragment(new AcceuilFragment());
+        replaceFragment(new AcceuilFragment(), false);
     }
 
-    private void replaceFragment(Fragment fragment) {
-        fragmentManager
+    private void replaceFragment(Fragment fragment, boolean addToBackStack) {
+        androidx.fragment.app.FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction()
-                .replace(R.id.frame_layout, fragment)
-                .commit();
+                .replace(R.id.frame_layout, fragment);
+
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+
+        fragmentTransaction.commit();
     }
 
-    // Méthode pour la déconnexion (à appeler quand nécessaire, par exemple depuis un bouton)
     public void logout() {
         mAuth.signOut();
         startActivity(new Intent(this, LoginActivity.class));
