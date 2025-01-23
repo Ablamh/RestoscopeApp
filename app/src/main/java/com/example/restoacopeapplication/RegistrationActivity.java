@@ -13,17 +13,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.restoacopeapplication.databinding.ActivityRegistrationBinding;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
+import android.util.Log;
 public class RegistrationActivity extends AppCompatActivity {
     private ActivityRegistrationBinding binding;
     private FirebaseAuth mAuth;
+    private static final String TAG = "Registration";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -91,39 +95,44 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String password) {
+        Log.d(TAG, "Starting registration process...");
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Obtenir l'ID de l'utilisateur créé
                         String userId = mAuth.getCurrentUser().getUid();
+                        Log.d(TAG, "User created with ID: " + userId);
 
-                        // Créer un objet utilisateur avec les informations supplémentaires
                         Map<String, Object> user = new HashMap<>();
                         user.put("nom", binding.nameInputLayout.getEditText().getText().toString());
                         user.put("prenom", binding.firstNameInputLayout.getEditText().getText().toString());
                         user.put("email", email);
+                        user.put("userType", "client");
 
-                        // Sauvegarder dans Firestore
+                        Log.d(TAG, "Starting Firestore document creation...");
                         FirebaseFirestore.getInstance()
                                 .collection("users")
                                 .document(userId)
                                 .set(user)
                                 .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "User document created successfully");
                                     Toast.makeText(RegistrationActivity.this,
                                             "Inscription réussie", Toast.LENGTH_SHORT).show();
-                                    // Rediriger vers MainActivity
-                                    startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                    startActivity(new Intent(RegistrationActivity.this, ClientMainActivity.class));
                                     finish();
                                 })
                                 .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Document creation error: " + e.getMessage());
                                     Toast.makeText(RegistrationActivity.this,
-                                            "Erreur lors de la sauvegarde des données",
-                                            Toast.LENGTH_SHORT).show();
+                                            "Erreur lors de la création du profil: " + e.getMessage(),
+                                            Toast.LENGTH_LONG).show();
                                 });
                     } else {
+                        Exception e = task.getException();
+                        String errorMessage = e != null ? e.getMessage() : "Erreur inconnue";
+                        Log.e(TAG, "Registration error: ", e);
                         Toast.makeText(RegistrationActivity.this,
-                                "Erreur lors de l'inscription: " + task.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                                "Erreur d'inscription: " + errorMessage,
+                                Toast.LENGTH_LONG).show();
                     }
                 });
     }

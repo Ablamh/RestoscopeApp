@@ -60,6 +60,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
 
+
     // Ajoutez ces dépendances explicites
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-common-ktx:20.4.2")

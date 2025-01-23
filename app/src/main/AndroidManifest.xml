@@ -15,6 +15,9 @@
         android:theme="@style/Theme.RestoacopeApplication"
         tools:targetApi="31">
         <activity
+            android:name=".ClientMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".RestaurateurMainActivity"
             android:exported="false" />
         <activity

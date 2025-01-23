@@ -76,17 +76,27 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this,
-                                "Connexion réussie", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        String userId = mAuth.getCurrentUser().getUid();
+                        FirebaseFirestore.getInstance()
+                                .collection("users")
+                                .document(userId)
+                                .get()
+                                .addOnSuccessListener(documentSnapshot -> {
+                                    String userType = documentSnapshot.getString("userType");
+                                    Toast.makeText(this, "Type utilisateur: " + userType, Toast.LENGTH_SHORT).show();
+
+                                    if ("restaurateur".equals(userType)) {
+                                        Intent intent = new Intent(this, RestaurateurMainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Erreur Firestore: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
                     } else {
-                        String errorMessage = task.getException() != null ?
-                                task.getException().getMessage() :
-                                "Erreur de connexion";
-                        Toast.makeText(LoginActivity.this,
-                                errorMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Erreur connexion: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

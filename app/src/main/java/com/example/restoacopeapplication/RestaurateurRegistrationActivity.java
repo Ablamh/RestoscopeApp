@@ -77,14 +77,14 @@ public class RestaurateurRegistrationActivity extends AppCompatActivity {
                     restaurateurData.put("address", address);
                     restaurateurData.put("phone", phone);
                     restaurateurData.put("email", email);
-                    restaurateurData.put("type", "restaurateur");
+                    restaurateurData.put("userType", "restaurateur");
 
                     FirebaseFirestore.getInstance()
-                            .collection("restaurateurs")
+                            .collection("users")  // Changé de "restaurateurs" à "users"
                             .document(uid)
                             .set(restaurateurData)
                             .addOnSuccessListener(v -> {
-                                startActivity(new Intent(this, LoginActivity.class));
+                                startActivity(new Intent(this, RestaurateurMainActivity.class)); // Changé de LoginActivity
                                 finish();
                             })
                             .addOnFailureListener(e -> {
