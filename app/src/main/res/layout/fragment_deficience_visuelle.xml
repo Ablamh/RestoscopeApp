@@ -48,15 +48,16 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbMenuBraille"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Menu en braille"
                     android:textColor="@color/black"
-
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbMenusGrosCaracteres"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Menu gros caractères"
@@ -65,6 +66,7 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbDescriptionAudio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Description audio"
@@ -82,15 +84,16 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbEclairageAdapte"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Eclairage adapté"
                     android:textColor="@color/black"
-
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbChiensGuideAcceptes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Chiens-guides acceptés"
@@ -99,6 +102,7 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbFormationDuPersonnel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Formation du personnel"

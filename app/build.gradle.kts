@@ -64,4 +64,9 @@ dependencies {
     // Ajoutez ces dépendances explicites
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-common-ktx:20.4.2")
+    implementation("com.squareup.picasso:picasso:2.71828")
+
+        implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+        implementation ("androidx.lifecycle:lifecycle-livedata:2.6.2")
+
 }

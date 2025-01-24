@@ -1,75 +1,98 @@
 package com.example.restoacopeapplication;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentDeficienceAuditive#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.widget.CheckBox;
+import android.widget.Toast;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.google.firebase.auth.FirebaseAuth;
+import android.util.Log;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
+
 public class FragmentDeficienceAuditive extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragmentDeficienceAuditive() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentDeficienceAuditive.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentDeficienceAuditive newInstance(String param1, String param2) {
-        FragmentDeficienceAuditive fragment = new FragmentDeficienceAuditive();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private AccessibilityViewModel viewModel;
+    private CheckBox cbPersonnelFormeLSF, cbSupportEcrit, cbSupportVisuel;
+    private CheckBox cbBoucleMagnetique, cbAlertesVisuelles, cbAlarmesLuminueuses;
+    private FirebaseFirestore firestore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        viewModel = new ViewModelProvider(requireActivity()).get(AccessibilityViewModel.class);
+        firestore = FirebaseFirestore.getInstance();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deficience_auditive, container, false);
-
-        Button btnPrecedent = view.findViewById(R.id.btnPrevious);
-        btnPrecedent.setOnClickListener(v -> {
-            getParentFragmentManager().popBackStack();
-        });
-
-        Button btnEnregistrer = view.findViewById(R.id.btnNext);
-        btnEnregistrer.setOnClickListener(v -> {
-            // Code pour l'enregistrement à implémenter
-        });
+        initializeViews(view);
+        setupButtons(view);
         return view;
+    }
+
+    private void initializeViews(View view) {
+        cbPersonnelFormeLSF = view.findViewById(R.id.cbPersonnelFormeLSF);
+        cbSupportEcrit = view.findViewById(R.id.cbSupportEcrit);
+        cbSupportVisuel = view.findViewById(R.id.cbSupportVisuel);
+        cbBoucleMagnetique = view.findViewById(R.id.cbBoucleMagnetique);
+        cbAlertesVisuelles = view.findViewById(R.id.cbAlertesVisuelles);
+        cbAlarmesLuminueuses = view.findViewById(R.id.cbAlarmesLuminueuses);
+    }
+
+    private void setupButtons(View view) {
+        view.findViewById(R.id.btnPrevious).setOnClickListener(v ->
+                getParentFragmentManager().popBackStack());
+        view.findViewById(R.id.btnNext).setOnClickListener(v -> saveAndUpload());
+    }
+
+    private void saveAndUpload() {
+        Map<String, Boolean> deficienceAuditive = collectData();
+        viewModel.saveDeficienceAuditiveData(deficienceAuditive);
+        uploadToFirebase();
+    }
+
+    private Map<String, Boolean> collectData() {
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("PersonnelFormeLSF", cbPersonnelFormeLSF.isChecked());
+        data.put("SupportEcrit", cbSupportEcrit.isChecked());
+        data.put("SupportVisuel", cbSupportVisuel.isChecked());
+        data.put("BoucleMagnetique", cbBoucleMagnetique.isChecked());
+        data.put("AlertesVisuelles", cbAlertesVisuelles.isChecked());
+        data.put("AlarmesLuminueuses", cbAlarmesLuminueuses.isChecked());
+        return data;
+    }
+
+    private void uploadToFirebase() {
+        Map<String, Object> allData = new HashMap<>();
+        allData.put("mobilitePhysique", viewModel.getMobiliteData().getValue());
+        allData.put("deficienceVisuelle", viewModel.getDeficienceVisuelleData().getValue());
+        allData.put("deficienceAuditive", viewModel.getDeficienceAuditiveData().getValue());
+        allData.put("photos", viewModel.getPhotosData().getValue());
+
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.d("Firebase", "CurrentUserId: " + currentUserId);
+        Log.d("Firebase", "Data to upload: " + allData.toString());
+
+        // Upload directement dans Etablissements avec l'ID utilisateur
+        firestore.collection("Etablissements")
+                .document(currentUserId)
+                .set(allData)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("Firebase", "Document successfully written");
+                    Toast.makeText(getContext(), "Données enregistrées", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firebase", "Error writing document: " + e.getMessage());
+                    Toast.makeText(getContext(), "Erreur d'enregistrement", Toast.LENGTH_SHORT).show();
+                });
     }
 }

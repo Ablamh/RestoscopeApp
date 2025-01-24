@@ -1,78 +1,96 @@
 package com.example.restoacopeapplication;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentMobilitePhysique#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.widget.CheckBox;
+import android.widget.Toast;
+import java.util.HashMap;
+import java.util.Map;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+
 public class FragmentMobilitePhysique extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private AccessibilityViewModel viewModel;
+    private CheckBox cbRampeAcces, cbParkingPMR, cbPorteAutomatique;
+    private CheckBox cbCheminDaccesStable, cbToilettesAdaptes, cbAscenseur;
+    private CheckBox cbTablesHauteurAdaptes, cbCirculationsAise;
+    private SharedData sharedData;
 
     public FragmentMobilitePhysique() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentMobilitePhysique.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentMobilitePhysique newInstance(String param1, String param2) {
-        FragmentMobilitePhysique fragment = new FragmentMobilitePhysique();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        // Required empty constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        sharedData = SharedData.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mobilite_physique, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(AccessibilityViewModel.class);
 
-        Button btnPrecedent = view.findViewById(R.id.btnPrevious);
-        btnPrecedent.setOnClickListener(v -> {
-            getParentFragmentManager().popBackStack();
-        });
+        initializeViews(view);
+        setupButtons(view);
 
-        Button btnSuivant = view.findViewById(R.id.btnNext);
-        btnSuivant.setOnClickListener(v -> {
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, new FragmentDeficienceVisuelle())
-                    .addToBackStack(null)
-                    .commit();
-        });
         return view;
+    }
+
+    private void initializeViews(View view) {
+        cbRampeAcces = view.findViewById(R.id.cbRampeAcces);
+        cbParkingPMR = view.findViewById(R.id.cbParkingPMR);
+        cbPorteAutomatique = view.findViewById(R.id.cbPorteAutomatique);
+        cbCheminDaccesStable = view.findViewById(R.id.cbCheminDaccesStable);
+        cbToilettesAdaptes = view.findViewById(R.id.cbToilettesAdaptes);
+        cbAscenseur = view.findViewById(R.id.cbAscenseur);
+        cbTablesHauteurAdaptes = view.findViewById(R.id.cbTablesHauteurAdaptes);
+        cbCirculationsAise = view.findViewById(R.id.cbCirculationsAise);
+    }
+
+    private void setupButtons(View view) {
+        Button btnPrecedent = view.findViewById(R.id.btnPrevious);
+        Button btnSuivant = view.findViewById(R.id.btnNext);
+
+        btnPrecedent.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+
+        btnSuivant.setOnClickListener(v -> {
+            if (saveData()) {
+                navigateToNext();
+            }
+        });
+    }
+
+    private boolean saveData() {
+        Map<String, Boolean> mobilitePhysique = new HashMap<>();
+        mobilitePhysique.put("rampeAcces", cbRampeAcces.isChecked());
+        mobilitePhysique.put("parkingPMR", cbParkingPMR.isChecked());
+        mobilitePhysique.put("porteAutomatique", cbPorteAutomatique.isChecked());
+        mobilitePhysique.put("chemainDaccesStable", cbCheminDaccesStable.isChecked());
+        mobilitePhysique.put("toilettesAdaptes", cbToilettesAdaptes.isChecked());
+        mobilitePhysique.put("ascenseur", cbAscenseur.isChecked());
+        mobilitePhysique.put("tablesHauteurAdaptes", cbTablesHauteurAdaptes.isChecked());
+        mobilitePhysique.put("circulationsAise", cbCirculationsAise.isChecked());
+
+        try {
+            viewModel.saveMobiliteData(mobilitePhysique);
+            return true;
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Erreur lors de la sauvegarde", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private void navigateToNext() {
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, new FragmentDeficienceVisuelle())
+                .addToBackStack(null)
+                .commit();
     }
 }

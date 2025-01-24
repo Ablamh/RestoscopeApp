@@ -10,8 +10,9 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-public class LoginActivity extends AppCompatActivity {
+import android.util.Log;
 
+public class LoginActivity extends AppCompatActivity {
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
     private MaterialButton loginButton;
@@ -85,7 +86,15 @@ public class LoginActivity extends AppCompatActivity {
                                     String userType = documentSnapshot.getString("userType");
                                     Toast.makeText(this, "Type utilisateur: " + userType, Toast.LENGTH_SHORT).show();
 
-                                    if ("restaurateur".equals(userType)) {
+                                    Log.d("LoginActivity", "UserType: " + userType);
+
+                                    if ("client".equals(userType)) {
+                                        Log.d("LoginActivity", "Redirecting to ClientMainActivity");
+                                        Intent intent = new Intent(LoginActivity.this, ClientMainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    } else if ("restaurateur".equals(userType)) {
                                         Intent intent = new Intent(this, RestaurateurMainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
@@ -93,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 })
                                 .addOnFailureListener(e -> {
+                                    Log.e("LoginActivity", "Firestore Error: " + e.getMessage());
                                     Toast.makeText(this, "Erreur Firestore: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 });
                     } else {
@@ -103,7 +113,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleForgotPassword(String email) {
         if (email.isEmpty()) {
-            emailInput.setError("Veuillez entrer votre email pour réinitialiser le mot de passe");
+            Toast.makeText(LoginActivity.this,
+                    "Veuillez entrer votre email pour réinitialiser le mot de passe",
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -115,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(LoginActivity.this,
-                                "Erreur lors de l'envoi de l'email de réinitialisation",
+                                "Erreur: " + task.getException().getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 });

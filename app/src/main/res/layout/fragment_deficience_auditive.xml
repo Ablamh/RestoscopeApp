@@ -48,15 +48,16 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbPersonnelFormeLSF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Personnel formé LSF"
-
                     android:textColor="@color/black"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbSupportEcrit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Support écrit"
@@ -65,14 +66,16 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbSupportVisuel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Support viduels"
+                    android:text="Support visuel"
                     android:textColor="@color/black"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbBoucleMagnetique"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Boucle magnétique"
@@ -90,21 +93,21 @@
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbAlertesVisuelles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Alertes visuelles"
                     android:textColor="@color/black"
-
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"/>
 
                 <CheckBox
+                    android:id="@+id/cbAlarmesLuminueuses"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Alarmes lumineuses"
                     android:textColor="@color/black"
                     android:layout_marginStart="16dp"/>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -137,7 +140,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Enregister"
+                android:text="Enregistrer"
                 android:backgroundTint="@color/purple_500"
                 android:textColor="@color/white"/>
         </LinearLayout>

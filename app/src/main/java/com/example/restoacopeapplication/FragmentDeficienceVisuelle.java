@@ -1,81 +1,85 @@
 package com.example.restoacopeapplication;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentDeficienceVisuelle#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.widget.CheckBox;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+import java.util.HashMap;
+import java.util.Map;
+import android.widget.Toast;
+import android.content.Context;
+
 public class FragmentDeficienceVisuelle extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragmentDeficienceVisuelle() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentDeficienceVisuelle.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentDeficienceVisuelle newInstance(String param1, String param2) {
-        FragmentDeficienceVisuelle fragment = new FragmentDeficienceVisuelle();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private AccessibilityViewModel viewModel;
+    private CheckBox cbMenuBraille, cbMenusGrosCaracteres, cbDescriptionAudio;
+    private CheckBox cbEclairageAdapte, cbChiensGuideAcceptes, cbFormationDuPersonnel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        viewModel = new ViewModelProvider(requireActivity()).get(AccessibilityViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_deficience_visuelle, container, false);
+        initializeViews(view);
+        setupButtons(view);
+        return view;
+    }
 
-                View view = inflater.inflate(R.layout.fragment_deficience_visuelle, container, false);
+    private void initializeViews(View view) {
+        cbMenuBraille = view.findViewById(R.id.cbMenuBraille);
+        cbMenusGrosCaracteres = view.findViewById(R.id.cbMenusGrosCaracteres);
+        cbDescriptionAudio = view.findViewById(R.id.cbDescriptionAudio);
+        cbEclairageAdapte = view.findViewById(R.id.cbEclairageAdapte);
+        cbChiensGuideAcceptes = view.findViewById(R.id.cbChiensGuideAcceptes);
+        cbFormationDuPersonnel = view.findViewById(R.id.cbFormationDuPersonnel);
+    }
 
-                Button btnPrecedent = view.findViewById(R.id.btnPrevious);
-                btnPrecedent.setOnClickListener(v -> {
-                    getParentFragmentManager().popBackStack();
-                });
+    private void setupButtons(View view) {
+        Button btnPrecedent = view.findViewById(R.id.btnPrevious);
+        Button btnSuivant = view.findViewById(R.id.btnNext);
 
-                Button btnSuivant = view.findViewById(R.id.btnNext);
-                btnSuivant.setOnClickListener(v -> {
-                    getParentFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.frame_layout, new FragmentDeficienceAuditive())
-                            .addToBackStack(null)
-                            .commit();
-                });
-                return view;
+        btnPrecedent.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        btnSuivant.setOnClickListener(v -> {
+            if (saveData()) {
+                navigateToNext();
             }
+        });
+    }
 
+    private boolean saveData() {
+        Map<String, Boolean> deficienceVisuelle = new HashMap<>();
+        deficienceVisuelle.put("menuBraille", cbMenuBraille.isChecked());
+        deficienceVisuelle.put("menusGrosCaracteres", cbMenusGrosCaracteres.isChecked());
+        deficienceVisuelle.put("descriptionAudio", cbDescriptionAudio.isChecked());
+        deficienceVisuelle.put("eclairageAdapte", cbEclairageAdapte.isChecked());
+        deficienceVisuelle.put("chiensGuideAcceptes", cbChiensGuideAcceptes.isChecked());
+        deficienceVisuelle.put("formationDuPersonnel", cbFormationDuPersonnel.isChecked());
+
+        try {
+            viewModel.saveDeficienceVisuelleData(deficienceVisuelle);
+            return true;
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Erreur de sauvegarde", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    private void navigateToNext() {
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, new FragmentDeficienceAuditive())
+                .addToBackStack(null)
+                .commit();
+    }
 }
+
