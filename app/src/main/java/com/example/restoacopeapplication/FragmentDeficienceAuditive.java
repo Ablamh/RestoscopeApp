@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import android.util.Log;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,27 +73,37 @@ public class FragmentDeficienceAuditive extends Fragment {
     }
 
     private void uploadToFirebase() {
-        Map<String, Object> allData = new HashMap<>();
-        allData.put("mobilitePhysique", viewModel.getMobiliteData().getValue());
-        allData.put("deficienceVisuelle", viewModel.getDeficienceVisuelleData().getValue());
-        allData.put("deficienceAuditive", viewModel.getDeficienceAuditiveData().getValue());
-        allData.put("photos", viewModel.getPhotosData().getValue());
-
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Log.d("Firebase", "CurrentUserId: " + currentUserId);
-        Log.d("Firebase", "Data to upload: " + allData.toString());
 
-        // Upload directement dans Etablissements avec l'ID utilisateur
+        Map<String, Object> establishmentData = new HashMap<>();
+        establishmentData.put("photos", viewModel.getPhotosData().getValue());
+        establishmentData.put("mobilitePhysique", viewModel.getMobiliteData().getValue());
+        establishmentData.put("deficienceVisuelle", viewModel.getDeficienceVisuelleData().getValue());
+        establishmentData.put("deficienceAuditive", collectData());
+
         firestore.collection("Etablissements")
                 .document(currentUserId)
-                .set(allData)
+                .set(establishmentData)
                 .addOnSuccessListener(aVoid -> {
-                    Log.d("Firebase", "Document successfully written");
                     Toast.makeText(getContext(), "Données enregistrées", Toast.LENGTH_SHORT).show();
+                    Log.d("Firebase", "All data saved successfully");
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("Firebase", "Error writing document: " + e.getMessage());
                     Toast.makeText(getContext(), "Erreur d'enregistrement", Toast.LENGTH_SHORT).show();
+                    Log.e("Firebase", "Error saving data: " + e.getMessage());
+                });
+    }
+
+    private void verifyDataSaved(String userId) {
+        firestore.collection("Etablissements")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Log.d("Firebase", "Saved data: " + documentSnapshot.getData());
+                    } else {
+                        Log.e("Firebase", "Document doesn't exist after save");
+                    }
                 });
     }
 }
