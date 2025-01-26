@@ -20,17 +20,33 @@ import android.util.Log;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
     private List<Restaurant> restaurants = new ArrayList<>();
+    private OnRestaurantClickListener listener;
+
+    public interface OnRestaurantClickListener {
+        void onRestaurantClick(Restaurant restaurant);
+    }
+
+    public void setOnRestaurantClickListener(OnRestaurantClickListener listener) {
+        this.listener = listener;
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView restaurantImage;
         private final TextView restaurantName;
         private final TextView restaurantDescription;
 
-        ViewHolder(View itemView) {
+        ViewHolder(View itemView, OnRestaurantClickListener listener, List<Restaurant> restaurants) {
             super(itemView);
             restaurantImage = itemView.findViewById(R.id.restaurantImage);
             restaurantName = itemView.findViewById(R.id.restaurantName);
             restaurantDescription = itemView.findViewById(R.id.restaurantDescription);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
+                    listener.onRestaurantClick(restaurants.get(position));
+                }
+            });
         }
 
         void bind(Restaurant restaurant) {
@@ -43,8 +59,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
                     Glide.with(itemView.getContext())
                             .load(photoUri)
                             .into(restaurantImage);
-
-                    Log.d("ImageLoading", "Loading image: " + photoUri);
                 } catch (Exception e) {
                     Log.e("ImageLoading", "Error loading image: " + e.getMessage());
                 }
@@ -55,7 +69,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_restaurant, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, listener, restaurants);
     }
 
     @Override

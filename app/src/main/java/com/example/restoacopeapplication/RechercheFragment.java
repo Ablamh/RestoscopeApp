@@ -19,6 +19,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
+import android.content.Intent;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RechercheFragment#newInstance} factory method to
@@ -70,15 +73,24 @@ public class RechercheFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recherche, container, false);
 
         db = FirebaseFirestore.getInstance();
         RecyclerView recyclerView = view.findViewById(R.id.restaurantsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new RestaurantAdapter();
-        recyclerView.setAdapter(adapter);
 
+        // Ajout du listener pour le clic
+        adapter.setOnRestaurantClickListener(restaurant -> {
+            Intent intent = new Intent(getActivity(), InformationRestaurantActivity.class);
+            intent.putExtra("restaurantId", restaurant.getRestaurateurId());
+            intent.putExtra("restaurantName", restaurant.getName());
+            intent.putExtra("restaurantAddress", restaurant.getAdresse());
+            intent.putExtra("restaurantPhoto", restaurant.getPhotos());
+            startActivity(intent);
+        });
+
+        recyclerView.setAdapter(adapter);
         loadRestaurants();
 
         return view;
@@ -97,22 +109,17 @@ public class RechercheFragment extends Fragment {
                         Restaurant restaurant = new Restaurant();
                         restaurant.setName(document.getString("restaurantName"));
                         restaurant.setAdresse(document.getString("address"));
+                        restaurant.setRestaurateurId(document.getId()); // Seule nouvelle ligne nécessaire
 
                         String restaurateurId = document.getId();
-                        Log.d("DEBUG", "RestaurateurID: " + restaurateurId);
-
                         db.collection("Etablissements")
                                 .document(restaurateurId)
                                 .get()
                                 .addOnSuccessListener(establishmentDoc -> {
                                     List<String> photos = (List<String>) establishmentDoc.get("photos");
-                                    Log.d("DEBUG", "Photos trouvées: " + (photos != null ? photos.toString() : "null"));
-
                                     if (photos != null && !photos.isEmpty()) {
                                         restaurant.setPhotos(photos.get(0));
-                                        Log.d("DEBUG", "Photo URL set: " + photos.get(0));
                                     }
-
                                     restaurants.add(restaurant);
                                     loadedRestaurants[0]++;
                                     if (loadedRestaurants[0] == totalRestaurants) {
@@ -124,4 +131,5 @@ public class RechercheFragment extends Fragment {
                 })
                 .addOnFailureListener(e -> Log.e("DEBUG", "Erreur users: " + e.getMessage()));
     }
+
 }

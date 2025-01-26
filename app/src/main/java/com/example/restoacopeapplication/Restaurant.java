@@ -4,6 +4,7 @@ public class Restaurant {
     private String name;
     private String adresse;
     private String photos;
+    private String restaurateurId;
 
     public String getName() {
         return name;
@@ -27,5 +28,13 @@ public class Restaurant {
 
     public void setPhotos(String photos) {
         this.photos = photos;
+    }
+
+    public String getRestaurateurId() {
+        return restaurateurId;
+    }
+
+    public void setRestaurateurId(String restaurateurId) {
+        this.restaurateurId = restaurateurId;
     }
 }
