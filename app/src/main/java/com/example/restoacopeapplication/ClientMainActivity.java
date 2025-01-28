@@ -20,7 +20,7 @@ public class ClientMainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
 
-        setupLogout();
+
         setupNavigation();
 
         if (savedInstanceState == null) {
@@ -54,11 +54,5 @@ public class ClientMainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupLogout() {
-        findViewById(R.id.logoutButton).setOnClickListener(v -> {
-            mAuth.signOut();
-            startActivity(new Intent(ClientMainActivity.this, LoginActivity.class));
-            finish();
-        });
-    }
+
 }

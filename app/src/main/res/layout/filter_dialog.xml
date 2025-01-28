@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Mobilité Physique -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mobilité Physique"
+            android:textStyle="bold"
+            android:background="#A196F3"
+            android:padding="8dp"/>
+
+        <CheckBox android:id="@+id/rampeAccesCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rampe d'accès"/>
+
+        <CheckBox android:id="@+id/parkingPMRCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Parking PMR"/>
+
+        <CheckBox android:id="@+id/portesAutomatiquesCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Portes automatiques"/>
+
+        <CheckBox android:id="@+id/chemainAccesStableCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chemin d'accès stable"/>
+
+        <CheckBox android:id="@+id/toilettesCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toilettes adaptées"/>
+
+        <CheckBox android:id="@+id/ascenseurCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ascenseur"/>
+
+        <CheckBox android:id="@+id/tablesHauteurAdapteeCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tables à hauteur adaptée"/>
+
+        <CheckBox android:id="@+id/circulationAiseeCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Circulation aisée"/>
+
+        <!-- Déficience Visuelle -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Déficience Visuelle"
+            android:textStyle="bold"
+            android:background="#A196F3"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <CheckBox android:id="@+id/menuBrailleCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menu en braille"/>
+
+        <CheckBox android:id="@+id/menuGrosCaracteresCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menu gros caractères"/>
+
+        <CheckBox android:id="@+id/descriptionAudioCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description audio"/>
+
+        <CheckBox android:id="@+id/eclairageAdapteCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Éclairage adapté"/>
+
+        <CheckBox android:id="@+id/chiensGuidesAcceptesCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chiens guides acceptés"/>
+
+        <CheckBox android:id="@+id/formationPersonnelCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Formation du personnel"/>
+
+        <!-- Déficience Auditive -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Déficience Auditive"
+            android:textStyle="bold"
+            android:background="#A196F3"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <CheckBox android:id="@+id/personnelFormeLSFCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personnel formé LSF"/>
+
+        <CheckBox android:id="@+id/supportEcritCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Support écrit"/>
+
+        <CheckBox android:id="@+id/supportVisuelCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Support visuel"/>
+
+        <CheckBox android:id="@+id/boucleMagnetiqueCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Boucle magnétique"/>
+
+        <CheckBox android:id="@+id/alertesVisuellesCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alertes visuelles"/>
+
+        <CheckBox android:id="@+id/alarmesLumineusesCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alarmes lumineuses"/>
+
+        <Button
+            android:id="@+id/applyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appliquer"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

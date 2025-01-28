@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/mainguide"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Titre principal -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guide d'accessibilité"
+            android:textSize="28sp"
+            android:textColor="@color/deep_purple"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Section Toilettes -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Toilettes accessibles pour PMR"
+                    android:textSize="20sp"
+                    android:textColor="@color/deep_purple"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/toilettes_pmr"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="180dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Les toilettes accessibles pour les personnes à mobilité réduite (PMR) sont conçues pour garantir leur autonomie et leur confort. Elles incluent des barres d'appui pour faciliter les mouvements, une entrée suffisamment large pour permettre l'accès en fauteuil roulant, un lavabo à hauteur adaptée, et une signalétique claire pour une identification rapide."
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Entrée -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Accès extérieur"
+                    android:textSize="20sp"
+                    android:textColor="@color/deep_purple"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/acces_pmr"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="180dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cet accès extérieur est spécialement conçu pour les personnes à mobilité réduite (PMR). Il comprend une rampe inclinée permettant aux fauteuils roulants de franchir les niveaux en toute autonomie, des mains courantes pour un appui sécurisé, et une signalisation claire pour indiquer l'accessibilité."
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Parking -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parking accessible"
+                    android:textSize="20sp"
+                    android:textColor="@color/deep_purple"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/parking_pmr"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="180dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ce parking est conçu pour les personnes à mobilité réduite (PMR), avec des places réservées signalées par le symbole du fauteuil roulant, situées près de l'entrée du bâtiment. Chaque emplacement dispose d'un espace latéral suffisant pour faciliter l'accès aux véhicules."
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Ascenseur -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ascenseur accessible"
+                    android:textSize="20sp"
+                    android:textColor="@color/deep_purple"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ascenseur_pmr"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="180dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cet ascenseur est conçu pour les personnes à mobilité réduite (PMR), avec des portes larges permettant l'accès aux fauteuils roulants, des boutons positionnés à une hauteur adaptée et en Braille, ainsi que des barres d'appui à l'intérieur pour plus de sécurité."
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Tables -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tables accessibles"
+                    android:textSize="20sp"
+                    android:textColor="@color/deep_purple"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tables_pmr"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="180dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ces tables sont spécialement conçues pour les personnes à mobilité réduite (PMR), avec une hauteur adaptée permettant aux utilisateurs en fauteuil roulant de s'y installer confortablement. L'espace sous les tables est suffisamment dégagé pour accueillir les fauteuils."
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>
