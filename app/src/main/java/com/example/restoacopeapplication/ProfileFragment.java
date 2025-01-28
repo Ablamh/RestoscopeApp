@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
-
+import android.content.Intent;
 public class ProfileFragment extends Fragment {
     private View viewMode;
     private View editMode;
@@ -111,9 +111,13 @@ public class ProfileFragment extends Fragment {
         saveButton.setOnClickListener(v -> updateProfile());
 
         logoutButton.setOnClickListener(v -> {
-            if (getActivity() instanceof RestaurateurMainActivity) {
-                ((RestaurateurMainActivity) getActivity()).logout();
-            }
+            FirebaseAuth.getInstance().signOut();  // Déconnexion Firebase
+
+            // Redirection vers MainActivity
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            getActivity().finish();
         });
     }
 
