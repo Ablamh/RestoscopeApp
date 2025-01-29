@@ -17,11 +17,15 @@
         android:theme="@style/Theme.RestoacopeApplication"
         tools:targetApi="31">
         <activity
+            android:name=".VisaliserRestaurantActivity"
+            android:exported="false" />
+        <activity
             android:name=".GuideAccessibility"
             android:exported="false" />
         <activity
             android:name=".CommentaireActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".InformationRestaurantActivity"
             android:exported="false" />

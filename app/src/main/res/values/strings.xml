@@ -55,36 +55,40 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_description">Menu button</string>
 
-        <!-- Labels -->
-        <string name="label_restaurant_name">🏪 Nom du Restaurant</string>
-        <string name="label_address">📍 Adresse</string>
-        <string name="label_phone">📞 Téléphone</string>
-        <string name="label_email">📧 Email</string>
+    <!-- Labels -->
+    <string name="label_restaurant_name">🏪 Nom du Restaurant</string>
+    <string name="label_address">📍 Adresse</string>
+    <string name="label_phone">📞 Téléphone</string>
+    <string name="label_email">📧 Email</string>
 
-        <!-- Hints -->
-        <string name="hint_restaurant_name">Entrez le nom du restaurant</string>
-        <string name="hint_address">Entrez l\'adresse</string>
-        <string name="hint_phone">Entrez le numéro de téléphone</string>
-        <string name="hint_email">Entrez l\'adresse email</string>
 
-        <!-- Buttons -->
-        <string name="button_edit">✏️ Modifier le profil</string>
-        <string name="button_save">💾 Sauvegarder</string>
-        <string name="button_logout">🚪 Déconnexion</string>
+        <string name="mobilite_physique">Mobilité Physique</string>
+        <string name="deficience_visuelle">Déficience Visuelle</string>
+        <string name="deficience_auditive">Déficience Auditive</string>
+        <string name="commentaire">Commentaire</string>
+     <!-- Hints -->
+    <string name="hint_restaurant_name">Entrez le nom du restaurant</string>
+    <string name="hint_address">Entrez l\'adresse</string>
+    <string name="hint_phone">Entrez le numéro de téléphone</string>
+    <string name="hint_email">Entrez l\'adresse email</string>
 
-        <!-- Content Descriptions for Accessibility -->
-        <string name="desc_restaurant_name">Label nom du restaurant</string>
-        <string name="desc_address">Label adresse</string>
-        <string name="desc_phone">Label téléphone</string>
-        <string name="desc_email">Label email</string>
-        <string name="desc_restaurant_name_input">Champ de saisie du nom du restaurant</string>
-        <string name="desc_address_input">Champ de saisie de l\'adresse</string>
-        <string name="desc_phone_input">Champ de saisie du numéro de téléphone</string>
-        <string name="desc_email_input">Champ de saisie de l\'adresse email</string>
-        <string name="desc_edit_button">Bouton pour modifier le profil</string>
-        <string name="desc_save_button">Bouton pour sauvegarder les modifications</string>
-        <string name="desc_logout_button">Bouton pour se déconnecter</string>
+    <!-- Buttons -->
+    <string name="button_edit">✏️ Modifier le profil</string>
+    <string name="button_save">💾 Sauvegarder</string>
+    <string name="button_logout">🚪 Déconnexion</string>
 
+    <!-- Content Descriptions for Accessibility -->
+    <string name="desc_restaurant_name">Label nom du restaurant</string>
+    <string name="desc_address">Label adresse</string>
+    <string name="desc_phone">Label téléphone</string>
+    <string name="desc_email">Label email</string>
+    <string name="desc_restaurant_name_input">Champ de saisie du nom du restaurant</string>
+    <string name="desc_address_input">Champ de saisie de l\'adresse</string>
+    <string name="desc_phone_input">Champ de saisie du numéro de téléphone</string>
+    <string name="desc_email_input">Champ de saisie de l\'adresse email</string>
+    <string name="desc_edit_button">Bouton pour modifier le profil</string>
+    <string name="desc_save_button">Bouton pour sauvegarder les modifications</string>
+    <string name="desc_logout_button">Bouton pour se déconnecter</string>
 
 
 </resources>
